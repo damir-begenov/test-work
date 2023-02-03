@@ -1,30 +1,28 @@
-package com.example.test_work.controller;
+package com.example.test_work.service;
 
+import com.example.test_work.entity.Input;
 import com.example.test_work.entity.busStops;
-import com.example.test_work.entity.input;
-import com.example.test_work.repo.busStopsRepo;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import com.example.test_work.repo.BusStopsRepo;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-@RestController
-@AllArgsConstructor
-public class example {
-    private final busStopsRepo busStopsRepos;
+@org.springframework.stereotype.Service
+@RequiredArgsConstructor
+public class Service {
+    private final BusStopsRepo busStopsRepos;
 
-
-    @PostMapping("/api/create/bus")
-    public busStops createBus(@RequestBody busStops busStops){
+    public busStops createBus(busStops busStops){
         return busStopsRepos.save(busStops);
     }
-    @GetMapping("/api/test/{from}/{to}")
-    public input firstt(@PathVariable(name = "from") int from,@PathVariable(name = "to") int to){
+
+    public Input getInput(int from, int to){
         List<busStops> busStopsList = busStopsRepos.findAll();
-        input input = new input();
+        Input input = new Input();
         boolean check = false;
         for(busStops busStopss : busStopsList){
             int[] damir = busStopss.getStops();
@@ -47,3 +45,4 @@ public class example {
         return input;
     }
 }
+
